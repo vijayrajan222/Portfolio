@@ -76,6 +76,61 @@ export default function VideoIntro({
   const [isMuted, setIsMuted] = useState(true);
   const [showSoundHint, setShowSoundHint] = useState(true);
 
+  // Replay video once from beginning and stop at the end
+  const handleVideoClick = (e) => {
+    if (e.target.closest('button')) return;
+    const fg = fgVideoRef.current;
+    const bg = bgVideoRef.current;
+    if (!fg || !bg) return;
+
+    fg.currentTime = 0;
+    bg.currentTime = 0;
+    fg.play().then(() => {
+      bg.play();
+      setIsPlaying(true);
+    }).catch(err => console.log("Video replay failed:", err));
+  };
+
+  // ---- Auto-hide the sound hint after a few seconds ---------------------
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSoundHint(false), 4800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!soundBadgeRef.current) return;
+    gsap.to(soundBadgeRef.current, {
+      autoAlpha: showSoundHint ? 1 : 0,
+      duration: 0.5,
+      ease: 'power2.out',
+    });
+  }, [showSoundHint]);
+
+  // ---- Controls -----------------------------------------------------------
+  const togglePlay = () => {
+    const fg = fgVideoRef.current;
+    const bg = bgVideoRef.current;
+    if (!fg || !bg) return;
+
+    if (isPlaying) {
+      fg.pause();
+      bg.pause();
+    } else {
+      fg.play();
+      bg.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    const fg = fgVideoRef.current;
+    if (!fg) return;
+    const next = !isMuted;
+    fg.muted = next;
+    setIsMuted(next);
+    if (!next) setShowSoundHint(false);
+  };
+
   const prefersReducedMotion = useReducedMotion();
 
   // ---- Entrance choreography ------------------------------------------
@@ -142,71 +197,6 @@ export default function VideoIntro({
     };
   }, [prefersReducedMotion]);
 
-  // ---- Mask the loop restart with a quick cross-fade ---------------------
-  useEffect(() => {
-    const fg = fgVideoRef.current;
-    const wrapper = fgWrapperRef.current;
-    if (!fg || !wrapper) return;
-
-    let fading = false;
-
-    const handleTimeUpdate = () => {
-      if (!fg.duration) return;
-      const remaining = fg.duration - fg.currentTime;
-      if (remaining < 0.3 && !fading) {
-        fading = true;
-        gsap.to(wrapper, { opacity: 0.15, duration: 0.22, ease: 'power1.in' });
-      }
-      if (fg.currentTime < 0.25 && fading) {
-        fading = false;
-        gsap.to(wrapper, { opacity: 1, duration: 0.35, ease: 'power1.out' });
-      }
-    };
-
-    fg.addEventListener('timeupdate', handleTimeUpdate);
-    return () => fg.removeEventListener('timeupdate', handleTimeUpdate);
-  }, []);
-
-  // ---- Auto-hide the sound hint after a few seconds ---------------------
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSoundHint(false), 4800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!soundBadgeRef.current) return;
-    gsap.to(soundBadgeRef.current, {
-      autoAlpha: showSoundHint ? 1 : 0,
-      duration: 0.5,
-      ease: 'power2.out',
-    });
-  }, [showSoundHint]);
-
-  // ---- Controls -----------------------------------------------------------
-  const togglePlay = () => {
-    const fg = fgVideoRef.current;
-    const bg = bgVideoRef.current;
-    if (!fg || !bg) return;
-
-    if (isPlaying) {
-      fg.pause();
-      bg.pause();
-    } else {
-      fg.play();
-      bg.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const toggleMute = () => {
-    const fg = fgVideoRef.current;
-    if (!fg) return;
-    const next = !isMuted;
-    fg.muted = next;
-    setIsMuted(next);
-    if (!next) setShowSoundHint(false);
-  };
-
   const scrollToId = (id) => {
     const target = document.getElementById(id);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
@@ -219,7 +209,6 @@ export default function VideoIntro({
         className={styles.bgVideo}
         src={videoSrc}
         autoPlay
-        loop
         muted
         playsInline
         aria-hidden="true"
@@ -230,6 +219,21 @@ export default function VideoIntro({
       <CinematicLayer className={styles.particleCanvas} />
 
       <div className={styles.heroInner}>
+        <header className={styles.navHeader}>
+          <div className={styles.logo}>
+            <span className={styles.logoAccent}>VIJAYARAJ</span>
+            <span className={styles.logoText}> A N</span>
+          </div>
+          <nav className={styles.navMenu}>
+            <button onClick={() => scrollToId('about')} className={styles.navLink}>About</button>
+            <button onClick={() => scrollToId('skills')} className={styles.navLink}>Skills</button>
+            <button onClick={() => scrollToId('tech-stack')} className={styles.navLink}>Tech Stack</button>
+            <button onClick={() => scrollToId('experience')} className={styles.navLink}>Experience</button>
+            <button onClick={() => scrollToId('projects')} className={styles.navLink}>Projects</button>
+            <button onClick={() => scrollToId('services')} className={styles.navLink}>Services</button>
+            <button onClick={() => scrollToId('contact')} className={styles.navLink}>Contact</button>
+          </nav>
+        </header>
         <div className={styles.heroTop}>
           <div className={styles.heroContent}>
             {latestHighlight && (
@@ -281,7 +285,7 @@ export default function VideoIntro({
 
           <div ref={frameRef} className={styles.frame}>
             <div className={styles.frameGlow} aria-hidden="true" />
-            <div ref={frameInnerRef} className={styles.frameInner}>
+            <div ref={frameInnerRef} className={styles.frameInner} onClick={handleVideoClick} style={{ cursor: 'pointer' }}>
               <div ref={fgWrapperRef} className={styles.fgWrapper}>
                 <video
                   ref={fgVideoRef}
@@ -289,11 +293,11 @@ export default function VideoIntro({
                   src={videoSrc}
                   poster={posterSrc}
                   autoPlay
-                  loop
                   muted
                   playsInline
                   aria-hidden="true"
                   tabIndex={-1}
+                  onEnded={() => setIsPlaying(false)}
                 />
                 <div className={styles.frameVignette} />
               </div>

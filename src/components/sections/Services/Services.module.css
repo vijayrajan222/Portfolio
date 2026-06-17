@@ -1,51 +1,264 @@
-.grid {
+.showcaseWrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  align-items: start;
+  margin-top: 2rem;
 }
 
-.card {
+/* ---- Left Panel Bubble Buttons ---- */
+.selectorColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bubbleButton {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 100px;
+  padding: 0.75rem 1.25rem 0.75rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
-  padding: clamp(1.6rem, 2.6vw, 2rem);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
+}
+
+.bubbleButton:hover {
+  background: rgba(255, 138, 61, 0.03);
+  border-color: rgba(255, 138, 61, 0.15);
+  transform: translateX(4px);
+}
+
+.bubbleNumber {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--mist);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.bubbleTitle {
+  font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--paper);
+  white-space: nowrap;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
+  text-overflow: ellipsis;
+  max-width: 190px;
+  transition: color 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 138, 61, 0.35);
+/* Active State styling */
+.activeBubble {
+  background: rgba(255, 138, 61, 0.05) !important;
+  border-color: rgba(255, 138, 61, 0.3) !important;
+  transform: translateX(6px) !important;
+  box-shadow: 0 10px 25px -10px rgba(255, 138, 61, 0.15);
 }
 
-.index {
+.activeBubble .bubbleNumber {
+  background: var(--ember);
+  border-color: var(--ember);
+  color: #1a0f08;
+  box-shadow: 0 0 10px rgba(255, 138, 61, 0.45);
+}
+
+.activeBubble .bubbleTitle {
+  color: var(--ember);
+}
+
+/* ---- Right Showcase Card ---- */
+.showcaseCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.8rem, 4vw, 2.6rem);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.serviceIndex {
   display: block;
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
-  font-size: 0.78rem;
-  color: var(--ember);
-  margin-bottom: 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--mist-faint);
+  margin-bottom: 0.5rem;
 }
 
-.title {
-  margin: 0 0 0.6rem;
+.serviceTitle {
+  margin: 0 0 0.8rem;
   font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 800;
   color: var(--paper);
+  letter-spacing: -0.01em;
 }
 
-.description {
+.serviceDescription {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: var(--mist);
 }
 
-@media (max-width: 1023px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+/* Deliverables Block */
+.detailsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  flex: 1;
 }
 
-@media (max-width: 639px) {
-  .grid { grid-template-columns: 1fr; }
+.detailsHeading {
+  margin: 0;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.deliverablesList {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.deliverableItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.checkMark {
+  color: #2be696;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-shadow: 0 0 6px rgba(43, 230, 150, 0.3);
+}
+
+.deliverableText {
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.88rem;
+  color: var(--mist);
+}
+
+/* Pagination dots at the bottom */
+.paginationRow {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: auto;
+  align-self: center;
+}
+
+.navIndicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(246, 241, 234, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.activeIndicator {
+  background: var(--ember) !important;
+  box-shadow: 0 0 6px var(--ember);
+  width: 14px;
+  border-radius: 10px;
+}
+
+/* Autoplay Progress Line */
+.progressBarBg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(to right, var(--ember), #ffb066);
+  width: 0%;
+  box-shadow: 0 0 6px rgba(255, 138, 61, 0.5);
+}
+
+/* ---- Responsive States ---- */
+@media (max-width: 960px) {
+  .showcaseWrap {
+    grid-template-columns: 1fr;
+  }
+  .selectorColumn {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+  .selectorColumn::-webkit-scrollbar {
+    display: none;
+  }
+  .bubbleButton {
+    flex-shrink: 0;
+    padding: 0.6rem 1rem 0.6rem 0.6rem;
+  }
+  .bubbleNumber {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+  .deliverablesList {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .showcaseCard {
+    padding: 1.25rem;
+    min-height: 420px;
+  }
+  .serviceTitle {
+    font-size: 1.4rem;
+  }
+  .serviceDescription {
+    font-size: 0.88rem;
+  }
+  .deliverableText {
+    font-size: 0.84rem;
+  }
 }

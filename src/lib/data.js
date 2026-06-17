@@ -188,6 +188,7 @@ export const projects = [
     stack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB'],
     // PLACEHOLDER: add real links once the repo / deployment are public.
     links: { github: '#', live: '#' },
+    featured: true,
   },
   {
     title: 'Virtue Rider',
@@ -197,7 +198,6 @@ export const projects = [
     stack: ['Node.js', 'Express', 'EJS', 'MongoDB', 'Razorpay'],
     // PLACEHOLDER: add real links once the repo / deployment are public.
     links: { github: '#', live: '#' },
-    featured: true,
   },
   {
     title: 'Farmland Surveillance & Smart Irrigation',

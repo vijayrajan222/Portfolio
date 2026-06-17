@@ -1,87 +1,135 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
 }
 
+/* Glassmorphic Category Card */
 .card {
-  padding: clamp(1.5rem, 2.6vw, 1.85rem);
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
-  transition: border-color 0.4s ease, transform 0.4s ease;
+  padding: 1.5rem;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .card:hover {
-  border-color: rgba(255, 138, 61, 0.3);
-  transform: translateY(-3px);
+  border-color: rgba(255, 138, 61, 0.22);
+  box-shadow: 
+    0 20px 40px -15px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(255, 138, 61, 0.04);
 }
 
 .cardHeader {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.categoryBadge {
+  width: 24px;
+  height: 2px;
+  background: var(--ember);
+  border-radius: 100px;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 0 8px var(--ember);
 }
 
 .cardTitle {
   margin: 0 0 0.35rem;
   font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-weight: 800;
   font-size: 1.1rem;
-  font-weight: 700;
   color: var(--paper);
 }
 
 .cardBlurb {
   margin: 0;
-  font-size: 0.84rem;
-  color: var(--mist-faint);
-}
-
-.skillList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.skillTop {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.4rem;
-}
-
-.skillName {
   font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--paper);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--mist);
 }
 
-.skillLevel {
+/* Badge Container */
+.badgeContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* Futuristic Tech Badge */
+.badge {
+  position: relative;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: default;
+}
+
+.badgeText {
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
   font-size: 0.72rem;
-  color: var(--ember);
+  color: var(--paper);
+  position: relative;
+  z-index: 2;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.barTrack {
-  height: 6px;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+.badgeGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 138, 61, 0.15) 0%, transparent 100%);
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.3s ease;
 }
 
-.barFill {
-  height: 100%;
-  border-radius: 100px;
-  width: 0%;
-  background: linear-gradient(90deg, var(--ember-deep), var(--ember));
+.badge:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(255, 138, 61, 0.35);
+  box-shadow: 0 8px 15px -6px rgba(255, 138, 61, 0.3);
 }
 
-@media (max-width: 1023px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+.badge:hover .badgeText {
+  color: #fff;
 }
 
-@media (max-width: 639px) {
-  .grid { grid-template-columns: 1fr; }
+.badge:hover .badgeGlow {
+  opacity: 1;
+}
+
+/* ---- Responsive States ---- */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

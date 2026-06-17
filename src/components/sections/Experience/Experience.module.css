@@ -1,117 +1,317 @@
-.timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.showcaseWrap {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  align-items: start;
+  margin-top: 2rem;
+}
+
+/* ---- Left Panel Tabs ---- */
+.tabsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tabButton {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tabButton:hover {
+  background: rgba(255, 138, 61, 0.03);
+  border-color: rgba(255, 138, 61, 0.15);
+}
+
+.activeTab {
+  background: rgba(255, 138, 61, 0.06) !important;
+  border-color: rgba(255, 138, 61, 0.3) !important;
+  box-shadow: 0 10px 25px -10px rgba(255, 138, 61, 0.15);
+}
+
+.tabIndicator {
+  width: 4px;
+  height: 24px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activeTab .tabIndicator {
+  background: var(--ember);
+  box-shadow: 0 0 8px var(--ember);
+}
+
+.tabInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tabCompany {
+  font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--paper);
+}
+
+.tabRole {
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.72rem;
+  color: var(--mist-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.activeTab .tabRole {
+  color: var(--mist);
+}
+
+/* ---- Right Showcase Card ---- */
+.showcaseCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
 }
 
-.item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 28px 1fr;
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 1.5rem;
-  padding-bottom: clamp(2.25rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.item:last-child {
-  padding-bottom: 0;
-}
-
-.marker {
-  position: relative;
+.headerInfo {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.marker::before {
-  content: '';
-  position: absolute;
-  top: 22px;
-  bottom: -16px;
-  width: 1px;
-  background: var(--surface-border);
-}
-
-.item:last-child .marker::before {
-  display: none;
-}
-
-.dot {
-  position: relative;
-  z-index: 1;
-  width: 14px;
-  height: 14px;
-  margin-top: 6px;
-  border-radius: 50%;
-  background: var(--ink-soft);
-  border: 2px solid var(--mist-faint);
-}
-
-.dot[data-current='true'] {
-  border-color: var(--ember);
-  background: var(--ember);
-  box-shadow: 0 0 0 5px rgba(255, 138, 61, 0.18);
-}
-
-.content {
-  padding-bottom: 0.5rem;
-}
-
-.headerRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-bottom: 0.3rem;
+.period {
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ember);
 }
 
 .role {
   margin: 0;
   font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
-  font-weight: 700;
+  font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+  font-weight: 800;
   color: var(--paper);
+  line-height: 1.2;
+}
+
+.company {
+  margin: 0;
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.95rem;
+  color: var(--mist);
 }
 
 .currentBadge {
-  padding: 0.2rem 0.6rem;
-  border-radius: 100px;
+  background: rgba(43, 230, 150, 0.1);
+  border: 1px solid rgba(43, 230, 150, 0.25);
+  color: #2be696;
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
-  font-size: 0.62rem;
+  font-size: 0.64rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ember);
-  background: rgba(255, 138, 61, 0.12);
-  border: 1px solid rgba(255, 138, 61, 0.3);
+  padding: 0.35rem 0.7rem;
+  border-radius: 100px;
+  flex-shrink: 0;
 }
 
-.companyLine {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--mist);
-}
-
-.period {
-  margin: 0.2rem 0 1rem;
-  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-  color: var(--mist-faint);
-}
-
-.points {
-  margin: 0;
-  padding-left: 1.1rem;
+/* Bullet Points */
+.pointsList {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  color: var(--mist);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  gap: 1.1rem;
+  flex: 1;
 }
 
-.points li::marker {
+.pointItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.pointDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ember);
+  box-shadow: 0 0 6px var(--ember);
+  margin-top: 0.55rem;
+  flex-shrink: 0;
+}
+
+.pointText {
+  margin: 0;
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--mist);
+}
+
+/* Controls */
+.controlsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.arrows {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.arrowButton {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--paper);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.arrowButton:hover {
+  background: var(--surface-hover);
+  border-color: rgba(255, 138, 61, 0.4);
   color: var(--ember);
+  transform: translateY(-1px);
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(246, 241, 234, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.activeDot {
+  background: var(--ember) !important;
+  box-shadow: 0 0 6px var(--ember);
+  width: 16px;
+  border-radius: 10px;
+}
+
+/* Autoplay Progress Line */
+.progressBarBg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(to right, var(--ember), #ffb066);
+  width: 0%;
+  box-shadow: 0 0 6px rgba(255, 138, 61, 0.5);
+}
+
+/* ---- Responsive States ---- */
+@media (max-width: 900px) {
+  .showcaseWrap {
+    grid-template-columns: 1fr;
+  }
+  .tabsPanel {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none; /* Firefox */
+  }
+  .tabsPanel::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+  }
+  .tabButton {
+    padding: 0.75rem 1.1rem;
+    flex-shrink: 0;
+  }
+  .tabIndicator {
+    width: 16px;
+    height: 4px;
+    border-radius: 10px;
+  }
+  .activeTab .tabIndicator {
+    width: 16px;
+    height: 4px;
+  }
+  .tabInfo {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tabRole {
+    display: none; /* Hide role on tab button in mobile for space */
+  }
+}
+
+@media (max-width: 600px) {
+  .showcaseCard {
+    padding: 1.25rem;
+    min-height: 450px;
+  }
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .currentBadge {
+    align-self: flex-start;
+  }
+  .pointText {
+    font-size: 0.88rem;
+  }
 }
