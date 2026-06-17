@@ -10,56 +10,53 @@ import styles from './Experience.module.css';
 export default function Experience() {
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
-  const progressRef = useRef(null);
-  const timelineRef = useRef(null);
-
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [progressActive, setProgressActive] = useState(false);
 
   useRevealAnimation(sectionRef);
 
-  // Auto-switching timeline animation with GSAP progress bar
+  // Restart progress bar animation when active index changes
   useEffect(() => {
-    if (!progressRef.current) return;
+    let active = true;
+    requestAnimationFrame(() => {
+      if (!active) return;
+      setProgressActive(false);
 
-    if (timelineRef.current) {
-      timelineRef.current.kill();
-    }
-
-    timelineRef.current = gsap.fromTo(
-      progressRef.current,
-      { width: '0%' },
-      {
-        width: '100%',
-        duration: 7.5,
-        ease: 'none',
-        onComplete: () => {
-          setActiveIndex((prev) => (prev + 1) % experience.length);
-        },
-      }
-    );
-
-    if (isPaused) {
-      timelineRef.current.pause();
-    } else {
-      timelineRef.current.play();
-    }
+      // Brief timeout to trigger DOM reflow and restart the CSS keyframe animation
+      const timer = setTimeout(() => {
+        if (active) setProgressActive(true);
+      }, 40);
+      
+      // Cleanup inside closure
+      return () => clearTimeout(timer);
+    });
 
     return () => {
-      if (timelineRef.current) {
-        timelineRef.current.kill();
-      }
+      active = false;
     };
-  }, [activeIndex, isPaused]);
+  }, [activeIndex]);
 
-  // Handle slide transition effects when index changes
+  // Premium storytelling slide transitions
   useEffect(() => {
     if (!cardRef.current) return;
 
+    const elements = cardRef.current.querySelectorAll('.animate-element');
+    
+    // Kill any active animations on these elements to prevent overlapping animation conflicts
+    gsap.killTweensOf(elements);
+
+    // Smooth horizontal slide-in and fade reveal
     gsap.fromTo(
-      cardRef.current.querySelectorAll('.animate-element'),
-      { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out' }
+      elements,
+      { opacity: 0, x: 25 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.55,
+        stagger: 0.05,
+        ease: 'power2.out',
+      }
     );
   }, [activeIndex]);
 
@@ -69,6 +66,10 @@ export default function Experience() {
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + experience.length) % experience.length);
+  };
+
+  const handleAnimationEnd = () => {
+    handleNext();
   };
 
   const activeRole = experience[activeIndex];
@@ -164,7 +165,12 @@ export default function Experience() {
 
             {/* Visual Autoplay Progress Bar */}
             <div className={styles.progressBarBg}>
-              <div ref={progressRef} className={styles.progressBar} />
+              <div
+                className={`${styles.progressBar} ${progressActive ? styles.active : ''} ${
+                  isPaused ? styles.paused : ''
+                }`}
+                onAnimationEnd={handleAnimationEnd}
+              />
             </div>
           </div>
         </div>

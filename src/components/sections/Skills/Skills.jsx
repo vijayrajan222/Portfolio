@@ -1,22 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import SectionHeading from '../../shared/SectionHeading';
 import { useRevealAnimation } from '../../shared/useRevealAnimation';
-import { useReducedMotion } from '../../VideoIntro/useReducedMotion';
 import { skillCategories } from '../../../lib/data';
 import styles from './Skills.module.css';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 export default function Skills() {
   const sectionRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
-  useRevealAnimation(sectionRef, '.reveal', { stagger: 0.08 });
+  useRevealAnimation(sectionRef);
 
   // Map existing categories from data.js into the requested 5 categories
   const groupedSkills = [
@@ -51,36 +43,6 @@ export default function Skills() {
     }
   ];
 
-  useEffect(() => {
-    if (prefersReducedMotion || !sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const badges = sectionRef.current.querySelectorAll('.skill-badge');
-      gsap.fromTo(
-        badges,
-        { scale: 0.8, opacity: 0, y: 15 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'back.out(1.7)',
-          stagger: {
-            each: 0.02,
-            grid: 'auto',
-          },
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            once: true,
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [prefersReducedMotion]);
-
   return (
     <section ref={sectionRef} id="skills" className="section section--alt">
       <div className="container">
@@ -101,7 +63,7 @@ export default function Skills() {
 
               <div className={styles.badgeContainer}>
                 {group.skills.map((skill) => (
-                  <div key={skill} className={`${styles.badge} skill-badge`}>
+                  <div key={skill} className={styles.badge}>
                     <span className={styles.badgeGlow} />
                     <span className={styles.badgeText}>{skill}</span>
                   </div>

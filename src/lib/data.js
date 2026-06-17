@@ -20,7 +20,7 @@ export const profile = {
   phone: '+91 8921530452',
   linkedin: 'https://linkedin.com/in/vijayaraj-developer',
   // PLACEHOLDER: no GitHub URL was on the resume — add yours.
-  github: 'https://github.com/your-username',
+  github: 'https://github.com/vijayrajan222',
   summary:
     "Full-Stack Developer with hands-on experience building data-driven web applications using modern JavaScript technologies. I'm proficient in developing robust backend services, crafting responsive interfaces, and integrating REST APIs with databases including MongoDB and PostgreSQL — with a background in data analysis, workflow automation, and customer-centric problem solving.",
   tagline:

@@ -1,7 +1,6 @@
 import VideoIntro from '@/components/VideoIntro/VideoIntro';
 import About from '@/components/sections/About/About';
 import Skills from '../components/sections/Skills/Skills';
-import TechStack from '../components/sections/TechStack/TechStack';
 import Experience from '@/components/sections/Experience/Experience';
 import Projects from '@/components/sections/Projects/Projects';
 import Services from '../components/sections/Services/Services';
@@ -19,7 +18,6 @@ export default function Home() {
       />
       <About />
       <Skills />
-      <TechStack />
       <Experience />
       <Projects />
       <Services />

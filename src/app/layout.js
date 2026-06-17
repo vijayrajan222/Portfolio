@@ -1,4 +1,5 @@
 import './globals.css';
+import SpaceBackground from '@/components/shared/SpaceBackground';
 
 export const metadata = {
   title: 'Vijayaraj A N — Full-Stack Developer',
@@ -9,7 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SpaceBackground />
+        {children}
+      </body>
     </html>
   );
 }

@@ -91,6 +91,24 @@ export default function VideoIntro({
     }).catch(err => console.log("Video replay failed:", err));
   };
 
+  // Programmatic autoplay loop on load (starting muted for policy compliance)
+  useEffect(() => {
+    const fg = fgVideoRef.current;
+    const bg = bgVideoRef.current;
+    if (!fg || !bg) return;
+
+    fg.muted = true;
+    setIsMuted(true);
+    fg.play()
+      .then(() => {
+        bg.play();
+        setIsPlaying(true);
+      })
+      .catch((err) => {
+        console.log("Autoplay failed on load:", err);
+      });
+  }, []);
+
   // ---- Auto-hide the sound hint after a few seconds ---------------------
   useEffect(() => {
     const timer = setTimeout(() => setShowSoundHint(false), 4800);
@@ -124,11 +142,23 @@ export default function VideoIntro({
 
   const toggleMute = () => {
     const fg = fgVideoRef.current;
-    if (!fg) return;
+    const bg = bgVideoRef.current;
+    if (!fg || !bg) return;
     const next = !isMuted;
+    
     fg.muted = next;
     setIsMuted(next);
-    if (!next) setShowSoundHint(false);
+    
+    if (!next) {
+      // Unmuted! Restart from beginning with sound
+      fg.currentTime = 0;
+      bg.currentTime = 0;
+      fg.play().then(() => {
+        bg.play();
+        setIsPlaying(true);
+      }).catch(err => console.log("Failed to play on unmute:", err));
+      setShowSoundHint(false);
+    }
   };
 
   const prefersReducedMotion = useReducedMotion();
@@ -292,8 +322,7 @@ export default function VideoIntro({
                   className={styles.fgVideo}
                   src={videoSrc}
                   poster={posterSrc}
-                  autoPlay
-                  muted
+                  muted={isMuted}
                   playsInline
                   aria-hidden="true"
                   tabIndex={-1}

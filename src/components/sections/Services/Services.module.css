@@ -92,7 +92,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
-  min-height: 400px;
+  min-height: 480px; /* Stable min height to prevent vertical layout shifts */
   display: flex;
   flex-direction: column;
 }
@@ -218,6 +218,19 @@
   box-shadow: 0 0 6px rgba(255, 138, 61, 0.5);
 }
 
+.progressBar.active {
+  animation: progressGrow 6.5s linear forwards;
+}
+
+.progressBar.paused {
+  animation-play-state: paused;
+}
+
+@keyframes progressGrow {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
 /* ---- Responsive States ---- */
 @media (max-width: 960px) {
   .showcaseWrap {
@@ -245,12 +258,14 @@
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
+  .showcaseCard {
+    min-height: auto; /* Allow auto height on tablet/mobile */
+  }
 }
 
 @media (max-width: 600px) {
   .showcaseCard {
     padding: 1.25rem;
-    min-height: 420px;
   }
   .serviceTitle {
     font-size: 1.4rem;

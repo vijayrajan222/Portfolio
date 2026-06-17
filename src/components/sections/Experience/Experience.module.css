@@ -14,7 +14,7 @@
 }
 
 .tabButton {
-  background: rgba(255, 255, 255, 0.01);
+  background: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
@@ -92,7 +92,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
-  min-height: 400px;
+  min-height: 480px; /* Stable min height to prevent vertical layout shifts */
   display: flex;
   flex-direction: column;
 }
@@ -114,6 +114,7 @@
 }
 
 .period {
+  display: block;
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
   font-size: 0.76rem;
   font-weight: 600;
@@ -261,6 +262,19 @@
   box-shadow: 0 0 6px rgba(255, 138, 61, 0.5);
 }
 
+.progressBar.active {
+  animation: progressGrow 7.5s linear forwards;
+}
+
+.progressBar.paused {
+  animation-play-state: paused;
+}
+
+@keyframes progressGrow {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
 /* ---- Responsive States ---- */
 @media (max-width: 900px) {
   .showcaseWrap {
@@ -296,12 +310,14 @@
   .tabRole {
     display: none; /* Hide role on tab button in mobile for space */
   }
+  .showcaseCard {
+    min-height: auto; /* Allow auto height on mobile, height shifts are less jarring on single-col layouts */
+  }
 }
 
 @media (max-width: 600px) {
   .showcaseCard {
     padding: 1.25rem;
-    min-height: 450px;
   }
   .cardHeader {
     flex-direction: column;
