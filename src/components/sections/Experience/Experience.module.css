@@ -1,0 +1,117 @@
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 1.5rem;
+  padding-bottom: clamp(2.25rem, 4vw, 3rem);
+}
+
+.item:last-child {
+  padding-bottom: 0;
+}
+
+.marker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.marker::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  bottom: -16px;
+  width: 1px;
+  background: var(--surface-border);
+}
+
+.item:last-child .marker::before {
+  display: none;
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  border: 2px solid var(--mist-faint);
+}
+
+.dot[data-current='true'] {
+  border-color: var(--ember);
+  background: var(--ember);
+  box-shadow: 0 0 0 5px rgba(255, 138, 61, 0.18);
+}
+
+.content {
+  padding-bottom: 0.5rem;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
+.role {
+  margin: 0;
+  font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: var(--paper);
+}
+
+.currentBadge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember);
+  background: rgba(255, 138, 61, 0.12);
+  border: 1px solid rgba(255, 138, 61, 0.3);
+}
+
+.companyLine {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--mist);
+}
+
+.period {
+  margin: 0.2rem 0 1rem;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--mist-faint);
+}
+
+.points {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  color: var(--mist);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.points li::marker {
+  color: var(--ember);
+}

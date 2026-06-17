@@ -1,0 +1,39 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.heading[data-align='center'] {
+  align-items: center;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 0.9rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  color: var(--paper);
+}
+
+.description {
+  margin: 1rem 0 0;
+  max-width: 56ch;
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--mist);
+}

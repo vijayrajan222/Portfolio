@@ -1,0 +1,87 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.card {
+  padding: clamp(1.5rem, 2.6vw, 1.85rem);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 138, 61, 0.3);
+  transform: translateY(-3px);
+}
+
+.cardHeader {
+  margin-bottom: 1.4rem;
+}
+
+.cardTitle {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display, 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--paper);
+}
+
+.cardBlurb {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--mist-faint);
+}
+
+.skillList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skillTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.skillName {
+  font-family: var(--font-body, 'Inter', ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.skillLevel {
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.72rem;
+  color: var(--ember);
+}
+
+.barTrack {
+  height: 6px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 100px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ember-deep), var(--ember));
+}
+
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 639px) {
+  .grid { grid-template-columns: 1fr; }
+}

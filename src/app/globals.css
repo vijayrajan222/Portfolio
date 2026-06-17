@@ -1,0 +1,59 @@
+:root {
+  --ink: #08070a;
+  --ink-soft: #0c0a0d;
+  --ember: #ff8a3d;
+  --ember-deep: #c2410c;
+  --glow-blue: #4fb8ff;
+  --paper: #f6f1ea;
+  --mist: rgba(246, 241, 234, 0.62);
+  --mist-faint: rgba(246, 241, 234, 0.4);
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+}
+
+/* Shared layout utilities — every section is built on these so spacing
+   and max-width stay consistent across the whole page. */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 max(6vw, 24px);
+}
+
+.section {
+  position: relative;
+  padding: clamp(4.5rem, 9vw, 7.5rem) 0;
+}
+
+.section--alt {
+  background: var(--ink-soft);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}

@@ -1,0 +1,73 @@
+.marqueeWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(3rem, 10vw, 8rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(to right, var(--ink), transparent);
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(to left, var(--ink), transparent);
+}
+
+.row {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 0.75rem;
+  width: max-content;
+}
+
+.trackLeft {
+  animation: scrollLeft 36s linear infinite;
+}
+
+.trackRight {
+  animation: scrollRight 32s linear infinite;
+}
+
+@keyframes scrollLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 0.7rem 1.3rem;
+  border-radius: 100px;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--paper);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trackLeft, .trackRight { animation: none; }
+}
