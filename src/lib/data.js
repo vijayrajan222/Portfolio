@@ -186,8 +186,7 @@ export const projects = [
     description:
       'A full-stack MERN application with a modular, maintainable codebase split into controllers, models, middleware, routes, and utilities. RESTful APIs handle employee authentication and attendance tracking with secure, structured client-server communication.',
     stack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB'],
-    // PLACEHOLDER: add real links once the repo / deployment are public.
-    links: { github: '#', live: '#' },
+    links: {},
     featured: true,
   },
   {
@@ -196,8 +195,7 @@ export const projects = [
     description:
       'A Node.js, Express, EJS, and MongoDB application supporting three distinct user roles — admin, seller, and buyer. Includes secure authentication, seller management, end-to-end order processing, Razorpay payments with refund handling, plus coupons, referrals, and a digital wallet for retention.',
     stack: ['Node.js', 'Express', 'EJS', 'MongoDB', 'Razorpay'],
-    // PLACEHOLDER: add real links once the repo / deployment are public.
-    links: { github: '#', live: '#' },
+    links: {},
   },
   {
     title: 'Farmland Surveillance & Smart Irrigation',
